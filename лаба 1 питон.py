@@ -2,6 +2,7 @@ import tkinter as T
 from tkinter import messagebox
 
 lis=["-","."]
+n=5
 
 #p=1 из 9 в 10
 #p=2 из 10 в 9
@@ -30,27 +31,38 @@ def one_translate(inp):#перевод
         res+=str(num)
         y=""
         j=0
-        while j!=10:
-            dub=dub*9
-            dub=str(dub)
-            y+=str(dub[0:dub.find(".")])
-            dub=dub[dub.find("."):len(dub)]
-            dub=float(dub)
-            j+=1
-        if minus:
-            resalt_string.set("-"+res[::-1]+"."+y)
+        if dub!=0:
+            while j!=n:
+                dub=dub*9
+                dub=str(dub)
+                y+=str(dub[0:dub.find(".")])
+                dub=dub[dub.find("."):len(dub)]
+                dub=float(dub)
+                j+=1
+            ss=res[::-1]+"."+y
         else:
-            resalt_string.set(res[::-1]+"."+y)
+            ss=res[::-1]+"."+"0"
+        if minus:
+            
+            resalt_string.set("-"+str(ss))
+        else:
+            resalt_string.set(str(ss))
 
-def second_translate(num):
+def second_translate(inp):
     res=0
     try:
-        num=int(num)
+        inp=float(inp)
+        inp=str(inp)
     except:
-        if num!="" and num not in lis:
+        if inp!="" and inp not in lis:
             messagebox.showerror("InError","Please input one number")
         resalt_string.set("Input one number")
     else:
+        dub=0.0
+        num=0
+        if "." in inp:
+            num=int(inp[0:inp.find(".")])
+            dub+=float(inp[inp.find("."):len(inp)])
         minus=False
         if num<0:
             num=num*-1
@@ -61,10 +73,26 @@ def second_translate(num):
             res+=k*(9**i)
             num=num//(10*(i+1))
             i+=1
-        if minus:
-            resalt_string.set("-"+str(res))
+        y=0.0
+        j=-1
+        i=0
+        if dub!=0:
+            dub=str(dub)
+            dub=dub[::-1]
+            dub=float(dub)
+            while abs(j)!=n:
+                k=dub%(10*(i+1))
+                y+=k*(9**j)
+                dub=dub//(10*(i+1))
+                j-=1
+                i+=1
+            ss=res+y
         else:
-            resalt_string.set(str(res))
+            ss=float(res)
+        if minus:
+            resalt_string.set("-"+str(ss))
+        else:
+            resalt_string.set(str(ss))
 
 def change1():#событие из 9 в 10
     global p
@@ -122,6 +150,10 @@ def author_info():
     messagebox.showinfo("About author","""Разработано Калашниковым Сергеем
 из группы ИУ7-23Б 
     """)
+
+def C2(nh):
+    global n
+    n=nh
  
 
 p=0
@@ -141,7 +173,8 @@ main_menu = T.Menu()#Главное меню
 dop_menu=T.Menu()#Меню выбора режима
 dop_clean=T.Menu()#Меню очистки
 dop_info=T.Menu()#Меню информации
-dop_dop_info=T.Menu()#
+
+
 
 #Меню очистки
 dop_clean.add_command(label="Input",command=lambda: C1(1))
