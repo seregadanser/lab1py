@@ -106,8 +106,8 @@ def C1(a):# событие очистки строк
         main_string.set("")
 
 def prog_info():
-    messagebox.showinfo("About programm","""Лабараторная 1 представляет из себя 
-переводчик из десятичной системы в девятеричную и обратно
+    messagebox.showinfo("About programm","""Лабараторная 1 является
+переводчиком из десятичной системы в девятеричную и обратно.
     """)
 
 def author_info():
