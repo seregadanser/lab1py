@@ -28,11 +28,19 @@ def one_translate(inp):#перевод
             res+=str(num%9)
             num=num//9
         res+=str(num)
-
+        y=""
+        j=0
+        while j!=10:
+            dub=dub*9
+            dub=str(dub)
+            y+=str(dub[0:dub.find(".")])
+            dub=dub[dub.find("."):len(dub)]
+            dub=float(dub)
+            j+=1
         if minus:
-            resalt_string.set("-"+res[::-1])
+            resalt_string.set("-"+res[::-1]+"."+y)
         else:
-            resalt_string.set(res[::-1])
+            resalt_string.set(res[::-1]+"."+y)
 
 def second_translate(num):
     res=0
