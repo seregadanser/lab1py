@@ -131,7 +131,6 @@ def fun(event):
         messagebox.showerror("InError","You can't input 9 in 9th sistem")
         uss=main_string.get()
         main_string.set(uss[:len(uss)-1])
-        print(main_string.get())
     if p==2:
         one_translate(main_string.get())
 
@@ -152,8 +151,8 @@ def prog_info():
     """)
 
 def author_info():
-    messagebox.showinfo("About author","""Разработано Калашниковым Сергеем
-из группы ИУ7-23Б 
+    messagebox.showinfo("About author","""Разработано студентом группы ИУ7-23Б 
+Калашниковым Сергеем
     """)
 
 def C2(nh):
@@ -174,13 +173,10 @@ info_string.set("Choose metode")
 is_warnings = T.IntVar()
 
 #Меню окна
-
 main_menu = T.Menu()#Главное меню
 dop_menu=T.Menu()#Меню выбора режима
 dop_clean=T.Menu()#Меню очистки
 dop_info=T.Menu()#Меню информации
-
-
 
 #Меню очистки
 dop_clean.add_command(label="Input",command=lambda: C1(1))
@@ -213,7 +209,7 @@ label1.grid(column=1,row=1)
 #информационная строка: вывод
 kk="Result:"
 label4 = T.Label(window,text=kk)
-label4.grid(column=1,row=2)
+label4.grid(column=1,row=2,sticky="E")
 
 #информационная строка: режим калькулятора
 label3 = T.Label(window,textvariable=info_string)
@@ -231,10 +227,12 @@ text.bind("<KeyRelease>", fun1)
 
 #кнопка перевода
 btn = T.Button(window,text="Convert",command=converse)
-btn.grid(column=3,row=1)
-window.config(menu=main_menu)
+btn.grid(column=3,row=1,sticky="W")
+
+
 
 #Создание окна
+window.config(menu=main_menu)
 window.title("Conversion from 10x to 9x")
 window.geometry("500x400")
 window.mainloop()
