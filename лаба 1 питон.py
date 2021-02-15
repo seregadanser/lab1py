@@ -13,7 +13,8 @@ def one_translate(inp):#перевод
         inp=str(inp)
     except:
         if inp!="" and inp not in lis:
-            messagebox.showerror("InError","Please input one number")
+            if is_warnings.get()!=1:
+                messagebox.showerror("InError","Please input one number")
         resalt_string.set("Input one number")
     else:
         dub=0.0
@@ -55,7 +56,8 @@ def second_translate(inp):
         inp=str(inp)
     except:
         if inp!="" and inp not in lis:
-            messagebox.showerror("InError","Please input one number")
+            if is_warnings.get()!=1:
+                messagebox.showerror("InError","Please input one number")
         resalt_string.set("Input one number")
     else:
         dub=0.0
@@ -87,6 +89,7 @@ def second_translate(inp):
                 j-=1
                 i+=1
             ss=res+y
+            ss=round(ss,5)
         else:
             ss=float(res)
         if minus:
@@ -108,7 +111,9 @@ def change2():#событие из 10 в 9
 def converse():
     global p
     if p==0:
-        messagebox.showwarning("Warning","choose way")    
+        
+        if is_warnings.get()!=1:
+            messagebox.showwarning("Warning","choose way")    
     if p==1:
         second_translate(main_string.get())
     if p==2:
@@ -163,9 +168,10 @@ window = T.Tk()
 main_string=T.StringVar()
 main_string.set("")
 resalt_string=T.StringVar()
-resalt_string.set(str(p))
+resalt_string.set("")
 info_string=T.StringVar()
 info_string.set("Choose metode")
+is_warnings = T.IntVar()
 
 #Меню окна
 
@@ -195,6 +201,10 @@ main_menu.add_cascade(label="Clean",menu=dop_clean)
 main_menu.add_cascade(label="Information",menu=dop_info)
 
 #Элементы окна
+#чекбокс
+is_warningbox = T.Checkbutton(text="Don't show warning messages", variable=is_warnings)
+is_warningbox.grid(column=3,row=2)
+
 #информационная строка: ввод 
 kkk="Enter the number:"
 label1 = T.Label(window,text=kkk)
