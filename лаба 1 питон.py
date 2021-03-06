@@ -2,13 +2,13 @@ import tkinter as T
 from tkinter import messagebox
 
 lis = ["-", "."]
-n = 5
+n=5
 
 # p=1 из 9 в 10
 # p=2 из 10 в 9
 
 
-def one_translate(inp):  # перевод
+def one_translate(inp):  # перевод из 10 в 9
     res = ""
     try:
         inp = float(inp)
@@ -52,7 +52,7 @@ def one_translate(inp):  # перевод
             resalt_string.set(str(ss))
 
 
-def second_translate(inp):
+def second_translate(inp):#из 9 в 10
     res = 0
     try:
         inp = float(inp)
@@ -101,61 +101,59 @@ def second_translate(inp):
             resalt_string.set(str(ss))
 
 
-def change1():  # событие из 9 в 10
-    global p
-    p = 1
+def change1(a):  # событие из 9 в 10
+    p.set(a)
     info_string.set("Conversion from {0} to {1}".format(9, 10))
 
 
-def change2():  # событие из 10 в 9
-    global p
-    p = 2
+def change2(a):  # событие из 10 в 9
+    p.set(a)
     info_string.set("Conversion from {0} to {1}".format(10, 9))
 
 # событие перевода
 
 
-def converse():
-    global p
-    if p == 0:
-
+def converse():#обработка клавиши перевода
+    if p.get() == 0:
         if is_warnings.get() != 1:
             messagebox.showwarning("Warning", "choose way")
-    if p == 1:
+    if p.get() == 1:
         second_translate(main_string.get())
-    if p == 2:
+    if p.get() == 2:
         one_translate(main_string.get())
 
 
-def fun1(event):
-    global p
-    if p == 1:
+def fun1(event):#обработка клавиш с клавитуры
+    if p.get() == 1:
         second_translate(main_string.get())
-    if p == 2:
+    if p.get() == 2:
         one_translate(main_string.get())
 
 
-def fun(event):
-    if p == 1:
+def fun(event):#обработка 9 с клавитуры
+    if p.get() == 1:
         messagebox.showerror("InError", "You can't input 9 in 9th sistem")
         uss = main_string.get()
         main_string.set(uss[:len(uss)-1])
         resalt_string.set("try again")
-    if p == 2:
+    if p.get() == 2:
         one_translate(main_string.get())
 
 
-def clavia(a):
-    if a != -1:
-        if p == 1 and a == 9:
+def clavia(a):#обработчик событий экранной клавиатуры
+    if a != -1 and a!= -2:
+        if p.get() == 1 and a == 9:
             messagebox.showerror("InError", "You can't input 9 in 9th sistem")
         else:
             main_string.set(main_string.get()+str(a))
     else:
-        if main_string.get()[0] != "-":
-            main_string.set("-"+main_string.get())
-        else:
-            main_string.set(main_string.get()[1:])
+        if a==-1:
+            if main_string.get()[0] != "-":
+                main_string.set("-"+main_string.get())
+            else:
+                main_string.set(main_string.get()[1:])
+        if a==-2:
+            main_string.set(main_string.get()+".")
 
 
 def C1(a):  # событие очистки строк
@@ -169,34 +167,38 @@ def C1(a):  # событие очистки строк
         main_string.set("")
 
 
-def prog_info():
+def prog_info():#о программе
     messagebox.showinfo("About programm", """Лабараторная 1 является
 переводчиком из десятичной системы в девятеричную и обратно.
     """)
 
 
-def author_info():
+def author_info():#об авторе 
     messagebox.showinfo("About author", """Разработано студентом группы ИУ7-23Б 
 Калашниковым Сергеем
     """)
 
 
-def C2(nh):
-    global n
-    n = nh
-
-
-p = 0
 window = T.Tk()
 
 
+
+
+
+
+#строки
+#строка ввода текста
 main_string = T.StringVar()
 main_string.set("")
+#строка результата
 resalt_string = T.StringVar()
 resalt_string.set("")
+#строка информацилонная
 info_string = T.StringVar()
 info_string.set("Choose metode")
+#
 is_warnings = T.IntVar()
+p=T.IntVar()
 
 # Меню окна
 main_menu = T.Menu()  # Главное меню
@@ -210,8 +212,8 @@ dop_clean.add_command(label="Output", command=lambda: C1(2))
 dop_clean.add_command(label="All", command=lambda: C1(3))
 
 # Меню выбора режима
-dop_menu.add_radiobutton(label="From 9x", command=change1)  # из 9 в 10
-dop_menu.add_radiobutton(label="From 10x", command=change2)  # из 10 в 9
+dop_menu.add_radiobutton(label="From 9x", command=lambda: change1(1))  # из 9 в 10
+dop_menu.add_radiobutton(label="From 10x", command=lambda: change2(2))  # из 10 в 9
 
 # Меню информации
 dop_info.add_command(label="About programm", command=prog_info)
@@ -256,13 +258,16 @@ text.bind("<KeyRelease>", fun1)
 # кнопка перевода
 
 
-wi = 6
-he = 3
-start1 = 60
-start2 = 90
+wi = 6#высота
+he = 3#ширина
+start1 = 60#начальный x
+start2 = 90#начальный y
+
+#кнопка перевода
 btn = T.Button(window, text="Convert", command=converse,
                width=wi, height=he, bg="#FF0000", fg="#000")
-btn.place(x=start1+wi*2*11, y=start2+he*3*25)
+btn.place(x=start1+wi*3*11, y=start2+he*3*25)
+#кнопки клавиатуры
 btn1 = T.Button(window, text="1", width=wi,
                 height=he, command=lambda: clavia(1), bg="#000", fg="#FFF")
 btn1.place(x=start1, y=start2)
@@ -296,6 +301,9 @@ btn0.place(x=start1+wi*11, y=start2+he*3*25)
 btn_minus = T.Button(window, text="-", width=wi,
                      height=he, command=lambda: clavia(-1), bg="#FFC000", fg="#000")
 btn_minus.place(x=start1, y=start2+he*3*25)
+btn_point = T.Button(window, text=".", width=wi,
+                     height=he, command=lambda: clavia(-2), bg="#FFC000", fg="#000")
+btn_point.place(x=start1+wi*2*11, y=start2+he*3*25)
 
 # Создание окна
 window.config(menu=main_menu)
