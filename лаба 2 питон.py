@@ -27,7 +27,6 @@ def combsort(alist):
 
 def create(N):
     l = []
-    i = 0
     for i in range(N):
         l.append(random.randint(-1*N, N))
     return l
@@ -152,6 +151,13 @@ label_i41 = T.Label(window, text="N2")
 label_i41.grid(column=2, row=5)
 label_i51 = T.Label(window, text="N3")
 label_i51.grid(column=3, row=5)
+
+label_i81 = T.Label(window, text="Not sorted:")
+label_i81.grid(column=0, row=6)
+label_i91 = T.Label(window, text="Sorted:")
+label_i91.grid(column=0, row=7)
+label_i101 = T.Label(window, text="Reverse:")
+label_i101.grid(column=0, row=8)
 
 label_r1 = T.Label(window, textvariable=T11)
 label_r1.grid(column=1, row=6)
